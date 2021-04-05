@@ -40,45 +40,6 @@ public class Creature : MonoBehaviour
         _rigidbody = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.D)) 
-        {
-            _creatrureAction = CreatureAction.moovingRight;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            _creatrureAction = CreatureAction.moovingLeft;
-        }
-        else if (_movementSpeed > 0.0f)
-        {
-            _creatrureAction = CreatureAction.stopMooving;
-        }
-        else
-        {
-            _creatrureAction = CreatureAction.idle;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (_creatrureAction == CreatureAction.moovingRight)
-        {
-            recalculateSpeed(true);
-            moveRight();
-        }
-        else if (_creatrureAction == CreatureAction.moovingLeft)
-        {
-            recalculateSpeed(true);
-            moveLeft();
-        }
-        else if (_creatrureAction == CreatureAction.stopMooving)
-        {
-            recalculateSpeed(false);
-            postMoovement();
-        }
-    }
-
     // Методы для передвижения, нужно будет еще добавить метод Jump()
 
     private void moveRight() 
