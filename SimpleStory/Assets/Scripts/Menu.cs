@@ -7,45 +7,29 @@ using UnityEngine.Audio;
 
 public class Menu : MonoBehaviour 
 {
-
+	// Загрузка карты игры
 	public void GoToGame()
 	{
-		SceneManager.LoadScene(0);
 		UnityEngine.Debug.Log("NewGame");
 	}
 	
+	// Переход на сцену с выбором уровня
 	public void SelectLevel()
 	{
-		// SceneManager.LoadScene(0);
 		UnityEngine.Debug.Log("SelectLevel");
 	}
 	
+	// Переход на сцену с информацией об авторах
 	public void About()
 	{
-		// SceneManager.LoadScene(0);
 		UnityEngine.Debug.Log("About");
 	}
 
+	// Завершение игры (выход из программы)
 	public void QuitGame()
 	{
 		Application.Quit();
 		UnityEngine.Debug.Log("QuitGame");
 	}
 	
-
-	//Load
-	public void LoadGame()
-	{
-		
-	}
-
-
-	//Save
-	public void SaveGame()
-	{
-		
-	}
-
-
-
 }
