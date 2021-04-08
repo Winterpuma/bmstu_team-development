@@ -22,8 +22,10 @@ public class Creature : MonoBehaviour
     private const float _movementForce = 40.0f;
     private const float _jumpForce = 7.0f;
     private const float _linearDrag = 30.0f;
+    private const float _verticalLinearDrag = _linearDrag * 0.1f;
     private const float _fallMultiplier = 5f;
     private const float _gravity = 1f;
+    private const float _groundCheckRayExtraLenght = 0.05f;
 
     [SerializeField]
     private bool _isGrounded;
@@ -35,7 +37,7 @@ public class Creature : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        _groundCheckRayLenght = _collider.size.y / 2 * transform.localScale.y + 0.05f;
+        _groundCheckRayLenght = _collider.size.y / 2 * transform.localScale.y + _groundCheckRayExtraLenght;
         _movementDirection = Vector2.zero;
         _creatrureAction = CreatureAction.idle;
         _isGrounded = false;
@@ -85,7 +87,7 @@ public class Creature : MonoBehaviour
         else
         {
             _rigidbody.gravityScale = _gravity;
-            _rigidbody.drag = _linearDrag * 0.1f;
+            _rigidbody.drag = _verticalLinearDrag;
 
             if (_rigidbody.velocity.y < 0.0f)
             {
