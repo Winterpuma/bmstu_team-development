@@ -4,79 +4,98 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
-    enum CreatureAction { idle, moovingRight, moovingLeft, stopMooving };
+    enum CreatureAction { idle, mooving, stopMooving, jumping };
     [SerializeField]
     private CreatureAction _creatrureAction;
 
+    [SerializeField]
+    private BoxCollider2D _collider;
     private Rigidbody2D _rigidbody;
+
+    [SerializeField]
+    private Vector2 _movementDirection;
+    [SerializeField]
+    private LayerMask _groundLayer;
 
     private const float _maxMovementSpeed = 10.0f;
     private const float _minMovementSpeed = 0.0f;
-    private const float _defaultAcceleration = 2.0f;
-    private const float _defaultDecelerationSpeed = 1.0f;
+    private const float _movementForce = 40.0f;
+    private const float _jumpForce = 7.0f;
+    private const float _linearDrag = 30.0f;
+    private const float _fallMultiplier = 5f;
+    private const float _gravity = 1f;
 
-    [SerializeField]
-    private float _movementSpeed;
-    [SerializeField]
-    private float _accelerationSpeed;
-    [SerializeField]
-    private float _decelerationSpeed;
-    [SerializeField]
-    private Vector3 _movementDirection;
     [SerializeField]
     private bool _isGrounded;
+    [SerializeField]
+    private float _groundCheckRayLenght;
 
-    // Этот метод вызывается перед Start(), мб стоит перенести туда, точно не уверен.
-
+    /// <summary>
+    /// Функция инициализации, вызывается до чего-либо другого.
+    /// </summary>
     private void Awake()
     {
-        _movementSpeed = _minMovementSpeed;
-        _accelerationSpeed = _defaultAcceleration;
-        _decelerationSpeed = _defaultDecelerationSpeed;
-
+        _groundCheckRayLenght = _collider.size.y / 2 * transform.localScale.y + 0.05f;
+        _movementDirection = Vector2.zero;
         _creatrureAction = CreatureAction.idle;
         _isGrounded = false;
-    
         _rigidbody = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    // Методы для передвижения, нужно будет еще добавить метод Jump()
-
-    private void moveRight() 
+    /// <summary>
+    /// Функция передвижения, должна вызываться в FixedUpdate(). Направление задачется пользовательским импутом.
+    /// </summary>
+    private void Move() 
     {
-        _movementDirection = Vector3.right;
-        _rigidbody.MovePosition(_rigidbody.position + (Vector2) _movementDirection * _movementSpeed * Time.fixedDeltaTime);
-    }
+        _rigidbody.AddForce(_movementDirection * _movementForce);
 
-    private void moveLeft() 
-    {
-        _movementDirection = Vector3.left;
-        _rigidbody.MovePosition(_rigidbody.position + (Vector2) _movementDirection * _movementSpeed * Time.fixedDeltaTime);
-    }
-
-    private void postMoovement()
-    {
-        _rigidbody.MovePosition(_rigidbody.position + (Vector2) _movementDirection * _movementSpeed * Time.fixedDeltaTime);
-    }
-
-    // Пересчет скорости, 
-    // Нужно будет еще добавить метод IsGrounded() для проверки находится ли объект на земле
-
-    private void recalculateSpeed(bool isMooving)
-    {
-        if (isMooving)
+        if (Mathf.Abs(_rigidbody.velocity.x) > _maxMovementSpeed)
         {
-            if (_movementSpeed < _maxMovementSpeed)
-                _movementSpeed += _accelerationSpeed;
-            else if (_movementSpeed > _maxMovementSpeed)
-                _movementSpeed = _maxMovementSpeed;
+            _rigidbody.velocity = new Vector2(Mathf.Sign(_rigidbody.velocity.x) * _maxMovementSpeed, _rigidbody.velocity.y);
+        }
+    }
+
+    /// <summary>
+    /// Фукнция прыжка, должна вызываться в FixedUpdate().
+    /// </summary>
+    private void Jump()
+    {
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0.0f);
+        _rigidbody.AddForce(Vector2.up*_jumpForce, ForceMode2D.Impulse);
+    }
+
+    /// <summary>
+    /// Функция позволяет сделать передвижение более плавным. Должна вызываться после Move().
+    /// </summary>
+    private void ModifyPhysics()
+    {
+        if (_isGrounded)
+        {
+            _rigidbody.gravityScale = _gravity;
+
+            if(Mathf.Sign(_movementDirection.x) != Mathf.Sign(_rigidbody.velocity.x) || _movementDirection.x == 0.0f)
+            {
+                _rigidbody.drag = _linearDrag;
+            }
+            else
+            {
+                _rigidbody.drag = 0f;
+            }
         }
         else
         {
-            if (_movementSpeed > _minMovementSpeed)
-                _movementSpeed -= _decelerationSpeed;
-            else if (_movementSpeed < _minMovementSpeed)
-                _movementSpeed = _minMovementSpeed;
+            _rigidbody.gravityScale = _gravity;
+            _rigidbody.drag = _linearDrag * 0.1f;
+
+            if (_rigidbody.velocity.y < 0.0f)
+            {
+                _rigidbody.gravityScale = _gravity * _fallMultiplier;
+            }
+            else if (_rigidbody.velocity.y > 0.0f && _creatrureAction != CreatureAction.jumping)
+            {
+                _rigidbody.gravityScale = _gravity * _fallMultiplier / 2;
+            }
+            
         }
     }
 }
