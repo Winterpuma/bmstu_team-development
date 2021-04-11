@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
-    enum CreatureAction { idle, mooving, stopMooving, jumping };
+    protected enum CreatureAction { idle, mooving, stopMooving, jumping };
     [SerializeField]
-    private CreatureAction _creatrureAction;
+    protected CreatureAction _creatrureAction;
 
     [SerializeField]
-    private BoxCollider2D _collider;
-    private Rigidbody2D _rigidbody;
+    protected BoxCollider2D _collider;
+    protected Rigidbody2D _rigidbody;
 
     [SerializeField]
-    private Vector2 _movementDirection;
+    protected Vector2 _movementDirection;
     [SerializeField]
-    private LayerMask _groundLayer;
+    protected LayerMask _groundLayer;
 
-    private const float _maxMovementSpeed = 10.0f;
-    private const float _minMovementSpeed = 0.0f;
-    private const float _movementForce = 40.0f;
-    private const float _jumpForce = 7.0f;
-    private const float _linearDrag = 30.0f;
-    private const float _verticalLinearDrag = _linearDrag * 0.1f;
-    private const float _fallMultiplier = 5f;
-    private const float _gravity = 1f;
-    private const float _groundCheckRayExtraLenght = 0.05f;
+    protected const float _maxMovementSpeed = 10.0f;
+    protected const float _minMovementSpeed = 0.0f;
+    protected const float _movementForce = 40.0f;
+    protected const float _jumpForce = 7.0f;
+    protected const float _linearDrag = 30.0f;
+    protected const float _verticalLinearDrag = _linearDrag * 0.1f;
+    protected const float _fallMultiplier = 5f;
+    protected const float _gravity = 1f;
+    protected const float _groundCheckRayExtraLenght = 0.05f;
 
     [SerializeField]
-    private bool _isGrounded;
+    protected bool _isGrounded;
     [SerializeField]
-    private float _groundCheckRayLenght;
+    protected float _groundCheckRayLenght;
 
     /// <summary>
     /// Функция инициализации, вызывается до чего-либо другого.
@@ -47,7 +47,7 @@ public class Creature : MonoBehaviour
     /// <summary>
     /// Функция передвижения, должна вызываться в FixedUpdate(). Направление задачется пользовательским импутом.
     /// </summary>
-    private void Move() 
+    protected void Move() 
     {
         _rigidbody.AddForce(_movementDirection * _movementForce);
 
@@ -60,7 +60,7 @@ public class Creature : MonoBehaviour
     /// <summary>
     /// Фукнция прыжка, должна вызываться в FixedUpdate().
     /// </summary>
-    private void Jump()
+    protected void Jump()
     {
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0.0f);
         _rigidbody.AddForce(Vector2.up*_jumpForce, ForceMode2D.Impulse);
@@ -69,7 +69,7 @@ public class Creature : MonoBehaviour
     /// <summary>
     /// Функция позволяет сделать передвижение более плавным. Должна вызываться после Move().
     /// </summary>
-    private void ModifyPhysics()
+    protected void ModifyPhysics()
     {
         if (_isGrounded)
         {
