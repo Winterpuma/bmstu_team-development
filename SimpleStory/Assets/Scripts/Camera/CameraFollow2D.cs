@@ -42,8 +42,15 @@ public class CameraFollow2D : MonoBehaviour
 		if (player)
 		{
 			int currentX = Mathf.RoundToInt(player.position.x);
+			if (currentX > lastX)
+			{
+				faceLeft = false;
+			} 
+			else if (currentX < lastX)
+            {
+				faceLeft = true;
+            }
 
-			if (currentX > lastX) faceLeft = false; else if (currentX < lastX) faceLeft = true;
 			lastX = Mathf.RoundToInt(player.position.x);
 
 			Vector3 target;
@@ -55,6 +62,7 @@ public class CameraFollow2D : MonoBehaviour
 			{
 				target = new Vector3(player.position.x + offset.x, player.position.y + offset.y, transform.position.z);
 			}
+
 			Vector3 currentPosition = Vector3.Lerp(transform.position, target, damping * Time.deltaTime);
 			transform.position = currentPosition;
 		}
