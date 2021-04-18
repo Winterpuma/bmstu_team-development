@@ -6,6 +6,18 @@ jobs:
   build:
     name: Build our project ✨
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+          projectPath:
+            - SimpleStory
+          unityVersion:
+            - 2020.3.1f1
+          targetPlatform:
+            - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+            - StandaloneWindows64 # Build a Windows 64-bit standalone.
+            - StandaloneLinux64 # Build a Linux 64-bit standalone.
+            - WebGL # WebGL.
+
     steps:
       # Checkout
       - name: Checkout repository
@@ -16,9 +28,11 @@ jobs:
       # Cache
       - uses: actions/cache@v2
         with:
-          path: Library
-          key: Library
-
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-${{ matrix.projectPath }}-
+            Library-
 
       # Build
       - name: Build project
@@ -26,7 +40,9 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          targetPlatform: WebGL
+          projectPath: ${{ matrix.projectPath }}
+          unityVersion: ${{ matrix.unityVersion }}
+          targetPlatform: ${{ matrix.targetPlatform }}
 
       # Output
       - uses: actions/upload-artifact@v2
