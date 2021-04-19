@@ -12,6 +12,7 @@ public class Menu : MonoBehaviour
 	/// </summary>
 	public void GoToGame()
 	{
+		SceneManager.LoadScene("FirstLevel");
 		UnityEngine.Debug.Log("NewGame");
 	}
 	
