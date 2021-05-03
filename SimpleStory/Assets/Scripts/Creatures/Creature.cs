@@ -17,6 +17,9 @@ public class Creature : MonoBehaviour
     [SerializeField]
     protected LayerMask _groundLayer;
 
+    [SerializeField]
+    protected Weapon _weapon;
+
     protected const float _maxMovementSpeed = 10.0f;
     protected const float _minMovementSpeed = 0.0f;
     protected const float _movementForce = 40.0f;

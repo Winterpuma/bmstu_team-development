@@ -41,6 +41,15 @@ public class Player : Creature
         {
             _creatrureAction = CreatureAction.idle;
         }
+    
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            _weapon.Shoot(transform.position, Vector2.right);
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            _weapon.Shoot(transform.position, Vector2.left);
+        }
     }
 
 
