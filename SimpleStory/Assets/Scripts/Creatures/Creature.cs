@@ -6,30 +6,78 @@ public class Creature : MonoBehaviour
 {
     protected enum CreatureAction { idle, mooving, stopMooving, jumping };
     [SerializeField]
+    /// <summary>
+    /// Энам сохраняющий текущее действие существа.
+    /// </summary>
     protected CreatureAction _creatrureAction;
 
     [SerializeField]
+    /// <summary>
+    /// Ссылка на Collider существа.
+    /// </summary>
     protected BoxCollider2D _collider;
+    /// <summary>
+    /// Ссылка на Rigidbody существа.
+    /// </summary>
     protected Rigidbody2D _rigidbody;
 
     [SerializeField]
+    /// <summary>
+    /// Направление движение существа.
+    /// </summary>
     protected Vector2 _movementDirection;
     [SerializeField]
+    /// <summary>
+    /// Слой земли, с которым будет искаться коллизия для прыжков.
+    /// </summary>
     protected LayerMask _groundLayer;
 
+    /// <summary>
+    /// Максимальная скорость передвижения
+    /// </summary>
     protected const float _maxMovementSpeed = 10.0f;
+    /// <summary>
+    /// Минимальная скорость передвижения
+    /// </summary>
     protected const float _minMovementSpeed = 0.0f;
+    /// <summary>
+    /// Сила воздействующая на существо при движении
+    /// </summary>
     protected const float _movementForce = 40.0f;
+    /// <summary>
+    /// Сила прыжка
+    /// </summary>
     protected const float _jumpForce = 7.0f;
+    /// <summary>
+    /// Замедление при смене движения
+    /// </summary>
     protected const float _linearDrag = 30.0f;
+    /// <summary>
+    /// Замедление при прыжке
+    /// </summary>
     protected const float _verticalLinearDrag = _linearDrag * 0.1f;
+    /// <summary>
+    /// коэффициент ускорения падения
+    /// </summary>
     protected const float _fallMultiplier = 5f;
+    /// <summary>
+    /// Коэффициент гравитации
+    /// </summary>
     protected const float _gravity = 1f;
+    /// <summary>
+    /// Небольшое удлиление луча для проверки нахождения существа на земле, чтоб выйти за рамки колайдера
+    /// </summary>
     protected const float _groundCheckRayExtraLenght = 0.05f;
 
     [SerializeField]
+    /// <summary>
+    /// Булева переменная. Означает находится ли существо на земле.
+    /// </summary>
     protected bool _isGrounded;
     [SerializeField]
+    /// <summary>
+    /// Длина луча, который пускается из центра персонажа для проверки нахождения его на земле.
+    /// </summary>
     protected float _groundCheckRayLenght;
 
     /// <summary>
