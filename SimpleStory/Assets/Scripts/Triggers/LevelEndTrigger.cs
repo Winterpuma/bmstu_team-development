@@ -16,7 +16,7 @@ public class LevelEndTrigger : MonoBehaviour
     {
         if (other.gameObject.layer == _playerLayerNumber)
         {
-            // SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("Finish");
         }
     }
 }

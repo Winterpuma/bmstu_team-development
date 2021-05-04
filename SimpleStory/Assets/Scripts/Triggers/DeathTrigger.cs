@@ -16,7 +16,7 @@ public class DeathTrigger : MonoBehaviour
     {
         if (other.gameObject.layer == _playerLayerNumber)
         {
-            // SceneManager.LoadScene("FirstLevel");
+            SceneManager.LoadScene("FirstLevel");
         }
     }
 }
