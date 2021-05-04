@@ -17,10 +17,10 @@ jobs:
           unityVersion:
             - 2020.3.1f1
           targetPlatform:
-            - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
             - StandaloneWindows64 # Build a Windows 64-bit standalone.
-            - StandaloneLinux64 # Build a Linux 64-bit standalone.
-            - WebGL # WebGL.
+            - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+            #- StandaloneLinux64 # Build a Linux 64-bit standalone.
+            #- WebGL # WebGL.
 
     steps:
       # Checkout
@@ -37,6 +37,14 @@ jobs:
           restore-keys: |
             Library-${{ matrix.projectPath }}-
             Library-
+      
+      # Test
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
 
       # Build
       - name: Build project
