@@ -19,8 +19,6 @@ jobs:
           targetPlatform:
             - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
             - StandaloneWindows64 # Build a Windows 64-bit standalone.
-            - StandaloneLinux64 # Build a Linux 64-bit standalone.
-            - WebGL # WebGL.
 
     steps:
       # Checkout
