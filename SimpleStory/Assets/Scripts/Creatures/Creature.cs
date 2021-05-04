@@ -4,31 +4,116 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
-    protected enum CreatureAction { idle, mooving, stopMooving, jumping };
+    /// <summary>
+    /// Действие существа
+    /// </summary>
+    protected enum CreatureAction 
+    { 
+        /// <summary>
+        /// Неподвижен
+        /// </summary>
+        idle, 
+
+        /// <summary>
+        /// Движется
+        /// </summary>
+        mooving, 
+
+        /// <summary>
+        /// Перестал двигаться
+        /// </summary>
+        stopMooving, 
+
+        /// <summary>
+        /// Прыгает
+        /// </summary>
+        jumping 
+    };
+    
+    /// <summary>
+    /// Текущее действие существа
+    /// </summary>
     [SerializeField]
     protected CreatureAction _creatrureAction;
 
+    /// <summary>
+    /// Прямоугольный коллайдр существа
+    /// </summary>
     [SerializeField]
     protected BoxCollider2D _collider;
+
+    /// <summary>
+    /// Твердое тело существа
+    /// </summary>
     protected Rigidbody2D _rigidbody;
 
+    /// <summary>
+    /// Направление движение существа
+    /// </summary>
     [SerializeField]
     protected Vector2 _movementDirection;
+
+    /// <summary>
+    /// Слой земли, с которым будет искаться коллизия для прыжков
+    /// </summary>
     [SerializeField]
     protected LayerMask _groundLayer;
 
+    /// <summary>
+    /// Максимальная скорость передвижения
+    /// </summary>
     protected const float _maxMovementSpeed = 10.0f;
+
+    /// <summary>
+    /// Минимальная скорость передвижения
+    /// </summary>
     protected const float _minMovementSpeed = 0.0f;
+
+    /// <summary>
+    /// Сила воздействующая на существо при движении
+    /// </summary>
     protected const float _movementForce = 40.0f;
+
+    /// <summary>
+    /// Сила прыжка
+    /// </summary>
     protected const float _jumpForce = 7.0f;
+
+    /// <summary>
+    /// Замедление при смене движения
+    /// </summary>
     protected const float _linearDrag = 30.0f;
+
+    /// <summary>
+    /// Замедление при прыжке
+    /// </summary>
     protected const float _verticalLinearDrag = _linearDrag * 0.1f;
+
+    /// <summary>
+    /// коэффициент ускорения падения
+    /// </summary>
     protected const float _fallMultiplier = 5f;
+
+    /// <summary>
+    /// Коэффициент гравитации
+    /// </summary>
     protected const float _gravity = 1f;
+
+    /// <summary>
+    /// Небольшое удлиление луча для проверки нахождения существа на земле, чтобы выйти за рамки колайдера
+    /// </summary>
     protected const float _groundCheckRayExtraLenght = 0.05f;
 
     [SerializeField]
+    /// <summary>
+    /// Флаг находится ли существо на земле
+    /// </summary>
+    /// 
     protected bool _isGrounded;
+    
+    /// <summary>
+    /// Длина луча, который пускается из центра персонажа для проверки нахождения его на земле
+    /// </summary>
     [SerializeField]
     protected float _groundCheckRayLenght;
 
@@ -45,7 +130,7 @@ public class Creature : MonoBehaviour
     }
 
     /// <summary>
-    /// Функция передвижения, должна вызываться в FixedUpdate(). Направление задачется пользовательским импутом.
+    /// Функция передвижения, должна вызываться в FixedUpdate(). Направление задается пользовательским вводом.
     /// </summary>
     protected void Move() 
     {
