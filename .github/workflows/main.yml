@@ -18,7 +18,7 @@ jobs:
         unityVersion:
           - 2020.3.1f1
         targetPlatform:
-          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          #- StandaloneOSX # Build a macOS standalone (Intel 64-bit).
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
 
     steps:
@@ -59,6 +59,7 @@ jobs:
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v2
+        allowDirtyBuild: true
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
