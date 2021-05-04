@@ -7,24 +7,26 @@ on:
       - develop
 
 jobs:
-  build:
-    name: Build our project ✨
+  buildAndTestForSomePlatforms:
+    name: Build for ${{ matrix.targetPlatform }} ✨
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-          projectPath:
-            - SimpleStory
-          unityVersion:
-            - 2020.3.1f1
-          targetPlatform:
-            - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
-            - StandaloneWindows64 # Build a Windows 64-bit standalone.
+        projectPath:
+          - SimpleStory
+        unityVersion:
+          - 2020.3.1f1
+        targetPlatform:
+          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
 
     steps:
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           lfs: true
 
       # Cache
