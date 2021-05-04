@@ -33,7 +33,7 @@ public class Player : Creature
             _creatrureAction = CreatureAction.idle;
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W))
         {
             _creatrureAction = CreatureAction.jumping;  
         }
