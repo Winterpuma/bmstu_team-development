@@ -38,19 +38,21 @@ jobs:
       
       # Test
       - name: Run tests
-        - uses: game-ci/unity-test-runner@v2
-          id: testRunner
-          env:
-            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          with:
-            projectPath: ${{ matrix.projectPath }}
-            unityVersion: ${{ matrix.unityVersion }}
-            githubToken: ${{ secrets.GITHUB_TOKEN }}
-        - uses: actions/upload-artifact@v2
-          if: always()
-          with:
-            name: Test results (all modes)
-            path: ${{ steps.testRunner.outputs.artifactsPath }}
+        uses: game-ci/unity-test-runner@v2
+        id: testRunner
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: ${{ matrix.projectPath }}
+          unityVersion: ${{ matrix.unityVersion }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: Test results (all modes)
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
 
       # Build
       - name: Build project
