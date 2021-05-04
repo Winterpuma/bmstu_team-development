@@ -27,7 +27,8 @@ public class Creature : MonoBehaviour
         /// <summary>
         /// Прыгает
         /// </summary>
-        jumping };
+        jumping 
+    };
     
     /// <summary>
     /// Текущее действие существа
@@ -105,7 +106,7 @@ public class Creature : MonoBehaviour
 
     [SerializeField]
     /// <summary>
-    /// Флаг аходится ли существо на земле
+    /// Флаг находится ли существо на земле
     /// </summary>
     /// 
     protected bool _isGrounded;
