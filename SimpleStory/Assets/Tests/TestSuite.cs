@@ -1,25 +1,59 @@
 using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class TestSuite
 {
-    // A Test behaves as an ordinary method
-    [Test]
-    public void TestSuiteSimplePasses()
+    /// <summary>
+    /// Возвращет имя текущей сцены
+    /// </summary>
+    private string ActiveSceneName { get => SceneManager.GetActiveScene().name; }
+
+    /// <summary>
+    /// Тестирует загрузку сцены меню
+    /// </summary>
+    [UnityTest]
+    public IEnumerator TestMenuLoaded()
     {
-        // Use the Assert class to test conditions
+		SceneManager.LoadScene("Menu");
+        
+        yield return null;
+
+        Assert.AreEqual("Menu", ActiveSceneName);
     }
 
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
+    /// <summary>
+    /// Тестирует нажатие клавиши старта игры
+    /// </summary>
     [UnityTest]
-    public IEnumerator TestSuiteWithEnumeratorPasses()
+    public IEnumerator TestCheckClickStartButton()
     {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
+		SceneManager.LoadScene("Menu");
+
         yield return null;
+        
+        TestHelper.ClickButton("NewGame");
+
+        yield return null;
+
+        Assert.AreEqual("FirstLevel", ActiveSceneName);
+    }
+
+    /// <summary>
+    /// Тестирует присутствие главных компонентов на сцене игры
+    /// </summary>
+    [UnityTest]
+    public IEnumerator TestPlayerIsOnFirstLevel()
+    {
+		SceneManager.LoadScene("FirstLevel");
+
+        yield return null;
+
+        Assert.That(UnityEngine.Object.FindObjectOfType<Player>(), Is.Not.Null);
+        TestHelper.AssertComponents(new string[] {"MainCharacter", "End (Idle)", "Ground", "Start (Idle)"});
     }
 }
