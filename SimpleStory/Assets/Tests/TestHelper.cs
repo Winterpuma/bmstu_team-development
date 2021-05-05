@@ -48,4 +48,20 @@ public class TestHelper : MonoBehaviour
             Assert.IsNotNull(GameObject.Find(name), "Missing component " + name);
         }
     }
+
+    /// <summary>
+    /// Сравнивает два вектора на равенство
+    /// </summary>
+    /// <param name="expected">Ожидаемый вектор</param>
+    /// <param name="actual">Реальный</param>
+    /// <param name="message">Сообщение ошибки</param>
+    public static void AssertTwoPositions(Vector3 expected, Vector3 actual, string message)
+    {
+        string errorMessage = $"{message}.\nExpected: {expected}\nGot: {actual}";
+        double delta = 0.1;
+
+        Assert.AreEqual(expected.x, actual.x, delta, errorMessage);
+        Assert.AreEqual(expected.y, actual.y, delta, errorMessage);
+        Assert.AreEqual(expected.z, actual.z, delta, errorMessage);
+    }
 }
