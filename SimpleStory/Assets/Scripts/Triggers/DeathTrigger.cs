@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
+/// <summary>
+/// Триггер смерти игрока
+/// </summary>
 public class DeathTrigger : MonoBehaviour
 {
     private int _playerLayerNumber = 7;

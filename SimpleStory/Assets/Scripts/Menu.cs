@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 
+/// <summary>
+/// Скрипт меню 
+/// </summary>
 public class Menu : MonoBehaviour 
 {
 	/// <summary>
