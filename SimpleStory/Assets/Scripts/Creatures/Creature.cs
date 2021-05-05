@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Базовый класс существа
+/// </summary>
 public class Creature : MonoBehaviour
 {
     /// <summary>
