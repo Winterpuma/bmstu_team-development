@@ -6,16 +6,14 @@ using UnityEngine;
 /// </summary>
 public class LevelEndTrigger : MonoBehaviour
 {
-    private int _playerLayerNumber = 7;
-
     /// <summary>
-    /// Вызывается при столкновении с колайдером. Если слой колайдера - Игрок, то
-    /// переносит на сцену выигрыша
+    /// Вызывается при столкновении с колайдером. 
+    /// Если столкнулся Игрок, то происходит загрузка сцены победы.
     /// </summary>
     /// <param name="other">Колайдер с котором произошло столкновение</param>
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.layer == _playerLayerNumber)
+        if (other.gameObject.name == "MainCharacter")
         {
             SceneManager.LoadScene("Finish");
         }

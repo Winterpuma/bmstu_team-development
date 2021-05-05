@@ -6,16 +6,14 @@ using UnityEngine;
 /// </summary>
 public class DeathTrigger : MonoBehaviour
 {
-    private int _playerLayerNumber = 7;
-
     /// <summary>
-    /// Вызывается при столкновении с колайдером. Если слой колайдера - Игрок, то
-    /// переносит на сцену проигрыша
+    /// Вызывается при столкновении с колайдером.
+    /// Если столкнулся Игрок, то происходит загрузка уровня с начала (игрок умирает)
     /// </summary>
     /// <param name="other">Колайдер с котором произошло столкновение</param>
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.layer == _playerLayerNumber)
+        if (other.gameObject.name == "MainCharacter")
         {
             SceneManager.LoadScene("FirstLevel");
         }
