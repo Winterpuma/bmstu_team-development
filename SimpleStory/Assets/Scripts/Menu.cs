@@ -1,12 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Audio;
 
+/// <summary>
+/// Скрипт меню 
+/// </summary>
 public class Menu : MonoBehaviour 
 {
+	/// <summary>
+	/// Загрузка меню игры
+	/// </summary>
+	public void GoToMenu()
+	{
+		SceneManager.LoadScene("Menu");
+		UnityEngine.Debug.Log("Menu");
+	}
+	
 	/// <summary>
 	/// Загрузка карты игры
 	/// </summary>
@@ -29,7 +37,8 @@ public class Menu : MonoBehaviour
 	/// </summary>
 	public void About()
 	{
-		UnityEngine.Debug.Log("About");
+		SceneManager.LoadScene("AboutAuthors");
+		UnityEngine.Debug.Log("AboutAuthors");
 	}
 	
 	/// <summary>

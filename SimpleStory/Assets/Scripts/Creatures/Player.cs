@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Класс игрока
+/// </summary>
 public class Player : Creature
 {
 
@@ -33,7 +34,7 @@ public class Player : Creature
             _creatrureAction = CreatureAction.idle;
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W))
         {
             _creatrureAction = CreatureAction.jumping;  
         }
