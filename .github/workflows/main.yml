@@ -7,24 +7,26 @@ on:
       - develop
 
 jobs:
-  build:
-    name: Build our project ✨
+  buildAndTestForSomePlatforms:
+    name: Build for ${{ matrix.targetPlatform }} ✨
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-          projectPath:
-            - SimpleStory
-          unityVersion:
-            - 2020.3.1f1
-          targetPlatform:
-            - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
-            - StandaloneWindows64 # Build a Windows 64-bit standalone.
+        projectPath:
+          - SimpleStory
+        unityVersion:
+          - 2020.3.1f1
+        targetPlatform:
+          #- StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
 
     steps:
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           lfs: true
 
       # Cache
@@ -35,6 +37,24 @@ jobs:
           restore-keys: |
             Library-${{ matrix.projectPath }}-
             Library-
+      
+      # Test
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v2
+        id: testRunner
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: ${{ matrix.projectPath }}
+          unityVersion: ${{ matrix.unityVersion }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: Test results (all modes)
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
 
       # Build
       - name: Build project
@@ -42,6 +62,7 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
+          allowDirtyBuild: true
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
