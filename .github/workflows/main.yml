@@ -1,6 +1,7 @@
 name: Actions 😎
 
 on: 
+  workflow_dispatch: 
   pull_request:    
     branches:
       - main
