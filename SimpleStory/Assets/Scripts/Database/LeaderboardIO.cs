@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace Assets.Scripts.Database
 {
@@ -27,7 +28,7 @@ namespace Assets.Scripts.Database
 		/// <summary>
 		/// Считывает лидерборд из файла
 		/// </summary>
-		public static List<LeaderboardRow> GetLeaderboard()
+		public static List<LeaderboardRow> GetAllLeaderboardData()
 		{
 			List<LeaderboardRow> list = new List<LeaderboardRow>();
 
@@ -53,6 +54,13 @@ namespace Assets.Scripts.Database
 			}
 
 			return list;
+		}
+
+		public static IEnumerable<LeaderboardRow> GetLeaderboard(int rowsAmount = 5)
+		{
+			var data = GetAllLeaderboardData();
+
+			return data.OrderBy(r => r.WalkthroughTime).Take(rowsAmount);
 		}
 	}
 }
