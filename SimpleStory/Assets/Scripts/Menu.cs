@@ -11,6 +11,7 @@ public class Menu : MonoBehaviour
 	/// </summary>
 	public void GoToMenu()
 	{
+		UnityEngine.Debug.Log("In go to menu");
 		SceneManager.LoadScene("Menu");
 		UnityEngine.Debug.Log("Menu");
 	}
@@ -49,5 +50,10 @@ public class Menu : MonoBehaviour
 		Application.Quit();
 		UnityEngine.Debug.Log("QuitGame");
 	}
+
+	public void GoToLeaderboard() 
+    {
+        SceneManager.LoadScene("Finish");
+    }
 	
 }

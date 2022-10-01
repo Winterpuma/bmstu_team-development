@@ -568,9 +568,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2131121048}
-        m_TargetAssemblyTypeName: UpdateLeaderborad, GameAssembly
-        m_MethodName: ChangeText
+      - m_Target: {fileID: 1704725037}
+        m_TargetAssemblyTypeName: Menu, GameAssembly
+        m_MethodName: GoToGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

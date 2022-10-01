@@ -15,7 +15,7 @@ public class LevelEndTrigger : MonoBehaviour
     {
         if (other.gameObject.name == "MainCharacter")
         {
-            SceneManager.LoadScene("Finish");
+            SceneManager.LoadScene("AskName");
         }
     }
 }

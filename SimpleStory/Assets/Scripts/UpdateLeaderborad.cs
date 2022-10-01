@@ -28,7 +28,15 @@ public class UpdateLeaderborad : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        var lead = LeaderboardIO.GetLeaderboard(7);
+        var res = "Leaders:\n\n";
+
+        foreach (var el in lead)
+        {
+            res += $"{el.PlayerName} {el.WalkthroughTime}\n";
+        }
+
+        changingText.text = res;
     }
 
     // Update is called once per frame
