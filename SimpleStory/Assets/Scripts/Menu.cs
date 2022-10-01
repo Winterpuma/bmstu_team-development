@@ -11,7 +11,6 @@ public class Menu : MonoBehaviour
 	/// </summary>
 	public void GoToMenu()
 	{
-		UnityEngine.Debug.Log("In go to menu");
 		SceneManager.LoadScene("Menu");
 		UnityEngine.Debug.Log("Menu");
 	}
