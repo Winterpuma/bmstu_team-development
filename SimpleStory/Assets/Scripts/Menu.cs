@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,7 @@ public class Menu : MonoBehaviour
 	/// </summary>
 	public void GoToGame()
 	{
+		EnterName.roundStart = DateTime.Now;
 		SceneManager.LoadScene("FirstLevel");
 		UnityEngine.Debug.Log("NewGame");
 	}

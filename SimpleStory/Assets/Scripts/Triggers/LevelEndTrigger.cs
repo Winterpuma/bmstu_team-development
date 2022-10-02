@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class LevelEndTrigger : MonoBehaviour
     {
         if (other.gameObject.name == "MainCharacter")
         {
+		    EnterName.roundEnd = DateTime.Now;
             SceneManager.LoadScene("AskName");
         }
     }

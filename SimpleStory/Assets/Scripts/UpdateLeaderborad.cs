@@ -6,43 +6,23 @@ using Assets.Scripts.Database;
 
 public class UpdateLeaderborad : MonoBehaviour
 {
-    public Text changingText;
-
-    public void ChangeText() 
-    {
-        //LeaderboardIO.Write(new LeaderboardRow { PlayerName="Hellofr231", MapId=1, WalkthroughTime=111});
-        //LeaderboardIO.Write(new LeaderboardRow { PlayerName="Heladjoj", MapId=1, WalkthroughTime=222});
-        //LeaderboardIO.Write(new LeaderboardRow { PlayerName="Aaaa", MapId=1, WalkthroughTime=777});
-
-        var lead = LeaderboardIO.GetLeaderboard(7);
-        var res = "Лидеры:\n\n";
-
-        foreach (var el in lead)
-        {
-            res += $"{el.PlayerName} {el.WalkthroughTime}\n";
-        }
-
-        changingText.text = res;
-    }
+    public Text leaderboardName;
+    public Text leaderboardTime;
 
     // Start is called before the first frame update
     void Start()
     {
         var lead = LeaderboardIO.GetLeaderboard(7);
         var res = "Leaders:\n\n";
+        var resTime = "\n\n";
 
         foreach (var el in lead)
         {
-            res += $"{el.PlayerName} {el.WalkthroughTime}\n";
+            res += $"{el.PlayerName}\n";
+            resTime += $"{el.WalkthroughTime.ToString("0.##")}\n";
         }
 
-        changingText.text = res;
+        leaderboardName.text = res;
+        leaderboardTime.text = resTime;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 }
